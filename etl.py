@@ -18,8 +18,8 @@ def transform(data:dict) -> pd.DataFrame:
     """ Transforms the dataset into desired structure and filters"""
     df = pd.DataFrame(data)
     print(f"Total Number of universities from API {len(data)}")
-    df = df[df["name"].str.contains("Arizona")]
-    print(f"Number of universities in Arizona {len(df)}")
+    df = df[df["name"].str.contains("California")]
+    print(f"Number of universities in California {len(df)}")
     df['domains'] = [','.join(map(str, l)) for l in df['domains']]
     df['web_pages'] = [','.join(map(str, l)) for l in df['web_pages']]
     df = df.reset_index(drop=True)
@@ -28,7 +28,7 @@ def transform(data:dict) -> pd.DataFrame:
 def load(df:pd.DataFrame)-> None:
     """ Loads data into a sqllite database"""
     disk_engine = create_engine('sqlite:///my_lite_store.db')
-    df.to_sql('cal_uni2', disk_engine, if_exists='replace')
+    df.to_sql('cal_uni', disk_engine, if_exists='replace')
 
 data = extract()
 df = transform(data)
